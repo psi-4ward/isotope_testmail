@@ -45,16 +45,56 @@ class tl_iso_mail_test extends Backend
 		$this->import('Isotope');	
 	
 		//Build form interface
-		
+		$arrData = array
+		(
+			'eval'	=> array('mandatory'=>true)
+		);
+				
+		$objSendTo = new TextField($arrData, 'sendTo', null, 'sendTo');
 		
 		//TO-DO: call isotope sendmail funciton
-		if($this->Input->post('FORM_SUBMIT')=='tl_iso_mail_test')
-		{
-			//$this->Isotope->sendMail(...);
+		if($this->Input->post('FORM_SUBMIT')=='tl_mail_test')
+		{		
+			$arrEmailAddresses = trimsplit(',',$this->Input->post('sendTo'));
+			foreach($arrEmailAddresses as $email)
+			{
+				if(preg_match('\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b',$email))
+					$arrEmails[] = $address;
+			}
+						
+			if(count($arrEmails))
+			{
+				//TODO: fourth param should contain data for basic customer & order info.
+				$this->Isotope->sendMail($this->id, implode($arrEmails), 'en', array());
+			}
 		}
 		
-		
-		return $strBuffer;	
+		 
+		return '<div id="tl_buttons">
+<a href="'.ampersand(str_replace('&key=testMail', '', $this->Environment->request)).'" class="header_back" title="'.specialchars($GLOBALS['TL_LANG']['MSC']['backBT']).'" accesskey="b">'.$GLOBALS['TL_LANG']['MSC']['backBT'].'</a>
+</div>
+
+<h2 class="sub_headline">'.$GLOBALS['TL_LANG']['tl_iso_mail']['testMail'][1].'</h2>'.$this->getMessages().'
+
+<form action="'.ampersand($this->Environment->request, true).'" id="tl_mail_test" class="tl_form" method="post">
+<div class="tl_formbody_edit">
+<input type="hidden" name="FORM_SUBMIT" value="tl_mail_test" />
+
+<div class="tl_tbox block">
+  <h3><label for="sendTo">'.$GLOBALS['TL_LANG']['tl_iso_mail']['sendTo'][0].'</label></h3>'.$objSendTo->generate().(strlen($GLOBALS['TL_LANG']['tl_iso_mail']['sendTo'][1]) ? '
+  <p class="tl_help tl_tip">'.$GLOBALS['TL_LANG']['tl_iso_mail']['sendTo'][1].'</p>' : '').'
+</div>
+
+</div>
+
+<div class="tl_formbody_submit">
+
+<div class="tl_submit_container">
+  <input type="submit" name="send" id="send" class="tl_submit" accesskey="s" value="'.specialchars($GLOBALS['TL_LANG']['tl_iso_mail']['send'][0]).'" />
+</div>
+
+</div>
+</form>';	
 	}
 	
 }
