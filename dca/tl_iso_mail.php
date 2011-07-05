@@ -33,7 +33,7 @@ $GLOBALS['TL_DCA']['tl_iso_mail']['operations']['sendTest'] = array
 (
 	'label'				  => &$GLOBALS['TL_LANG']['tl_iso_mail']['sendTest'],
 	'href'				  => 'key=testMail',
-	'icon'				  => 'system/modules/isotope/html/test-email.png'
+	'icon'				  => 'system/modules/isotope_testmail/html/email-test.png'
 );
 
 class tl_iso_mail_test extends Backend 
