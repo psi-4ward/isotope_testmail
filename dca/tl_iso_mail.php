@@ -79,6 +79,7 @@ class tl_iso_mail_test extends Backend
 <form action="'.ampersand($this->Environment->request, true).'" id="tl_mail_test" class="tl_form" method="post">
 <div class="tl_formbody_edit">
 <input type="hidden" name="FORM_SUBMIT" value="tl_mail_test" />
+<input type="hidden" name="REQUEST_TOKEN" value="'.REQUEST_TOKEN.'">
 
 <div class="tl_tbox block">
   <h3><label for="sendTo">'.$GLOBALS['TL_LANG']['tl_iso_mail']['sendTo'][0].'</label></h3>'.$objSendTo->generate().(strlen($GLOBALS['TL_LANG']['tl_iso_mail']['sendTo'][1]) ? '
