@@ -10,21 +10,21 @@
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation, either
  * version 3 of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this program. If not, please visit the Free
  * Software Foundation website at <http://www.gnu.org/licenses/>.
  *
  * PHP version 5
- * @copyright  Intelligent Spark 2011 
- * @author     Fred Bliss <http://www.intelligentspark.com> 
+ * @copyright  Intelligent Spark 2011
+ * @author     Fred Bliss <http://www.intelligentspark.com>
  * @package    IsotopeTestMail
- * @license    LGPL 
+ * @license    LGPL
  * @filesource
  */
 
@@ -36,40 +36,40 @@ $GLOBALS['TL_DCA']['tl_iso_mail']['operations']['sendTest'] = array
 	'icon'				  => 'system/modules/isotope_testmail/html/email-test.png'
 );
 
-class tl_iso_mail_test extends Backend 
+class tl_iso_mail_test extends Backend
 {
-	
+
 	public function sendTest()
 	{
 		//Gather form info & create a test email.  Send information to the test email indicated in the form.
-		$this->import('Isotope');	
-	
+		$this->import('Isotope');
+
 		//Build form interface
 		$arrData = array
 		(
 			'eval'	=> array('mandatory'=>true)
 		);
-				
+
 		$objSendTo = new TextField($arrData, 'sendTo', null, 'sendTo');
-		
+
 		//TO-DO: call isotope sendmail funciton
 		if($this->Input->post('FORM_SUBMIT')=='tl_mail_test')
-		{		
+		{
 			$arrEmailAddresses = trimsplit(',',$this->Input->post('sendTo'));
 			foreach($arrEmailAddresses as $email)
 			{
 				if(preg_match('\b[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b',$email))
 					$arrEmails[] = $address;
 			}
-						
+
 			if(count($arrEmails))
 			{
 				//TODO: fourth param should contain data for basic customer & order info.
 				$this->Isotope->sendMail($this->id, implode($arrEmails), 'en', array());
 			}
 		}
-		
-		 
+
+
 		return '<div id="tl_buttons">
 <a href="'.ampersand(str_replace('&key=testMail', '', $this->Environment->request)).'" class="header_back" title="'.specialchars($GLOBALS['TL_LANG']['MSC']['backBT']).'" accesskey="b">'.$GLOBALS['TL_LANG']['MSC']['backBT'].'</a>
 </div>
@@ -95,7 +95,7 @@ class tl_iso_mail_test extends Backend
 </div>
 
 </div>
-</form>';	
+</form>';
 	}
-	
+
 }
